@@ -7,4 +7,4 @@ python3 src/preprocess.py conceptnet
 python3 src/preprocess.py
 
 # Start training
-python3 -u src/main.py --gpu 0 > run.log &
+# python3 -u src/main.py --gpu 0 > run.log &

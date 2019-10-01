@@ -373,10 +373,42 @@ def preprocess_conceptnet(path):
         writer.write('%s %s %s\n' % (relation, w1, w2))
     writer.close()
 
+def preprocess_conceptnet_additoanl(conceptnet_path, additional_path):
+    import utils
+    build_vocab_from_raw_dataset(path='./data/*-data.json')
+    writer = open('./data/concept.filter', 'w', encoding='utf-8')
+    def _get_lan_and_w(arg):
+        arg = arg.strip('/').split('/')
+        return arg[1], arg[2]
+    for line in open(conceptnet_path, 'r', encoding='utf-8'):
+        fs = line.split('\t')
+        relation, arg1, arg2 = fs[1].split('/')[-1], fs[2], fs[3]
+        lan1, w1 = _get_lan_and_w(arg1)
+        if lan1 != 'en' or not all(w in utils.vocab for w in w1.split('_')):
+            continue
+        lan2, w2 = _get_lan_and_w(arg2)
+        if lan2 != 'en' or not all(w in utils.vocab for w in w2.split('_')):
+            continue
+        obj = json.loads(fs[-1])
+        if obj['weight'] < 1.0:
+            continue
+        writer.write('%s %s %s\n' % (relation, w1, w2))
+    for line in open(additional_path, 'r', encoding='utf-8'):
+        fs = line[:-1].split('\t')
+        relation, arg1, arg2 = fs[0], fs[1], fs[2]
+        lan1, w1 = _get_lan_and_w(arg1)
+        if lan1 != 'en' or not all(w in utils.vocab for w in w1.split('_')):
+            continue
+        lan2, w2 = _get_lan_and_w(arg2)
+        if lan2 != 'en' or not all(w in utils.vocab for w in w2.split('_')):
+            continue
+        writer.write('%s %s %s\n' % (relation, w1, w2))
+    writer.close()
+
 if __name__ == '__main__':
     init_tokenizer()
     if len(sys.argv) > 1 and sys.argv[1] == 'conceptnet':
-        preprocess_conceptnet('./data/conceptnet-assertions-5.5.5.csv')
+        preprocess_conceptnet_additoanl('./data/conceptnet-assertions-5.5.5.csv', './other_data/auto_conceptnet_1_percent.txt')
         exit(0)
     preprocess_dataset('./data/trial-data.json')
     preprocess_dataset('./data/dev-data.json')
