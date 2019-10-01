@@ -10,9 +10,11 @@ from utils import load_data, build_vocab
 from config import args
 from model import Model
 
-torch.manual_seed(args.seed)
-np.random.seed(args.seed)
-random.seed(args.seed)
+
+used_seed = random.randint(1, 2000)
+torch.manual_seed(used_seed)
+np.random.seed(used_seed)
+random.seed(used_seed)
 
 if __name__ == '__main__':
 
@@ -28,7 +30,7 @@ if __name__ == '__main__':
 
     best_dev_acc = 0.0
     os.makedirs('./checkpoint', exist_ok=True)
-    checkpoint_path = './checkpoint/%d-%s.mdl' % (args.seed, datetime.now().isoformat())
+    checkpoint_path = './checkpoint/%d-%s.mdl' % (used_seed, datetime.now().isoformat())
     print('Trained model will be saved to %s' % checkpoint_path)
 
     for i in range(args.epoch):
