@@ -53,5 +53,6 @@ if __name__ == '__main__':
         elif args.test_mode:
             model.save(checkpoint_path)
         print('Epoch %d use %d seconds.' % (i, time.time() - start_time))
+        print('Current best dev accuracy: %f' % best_dev_acc)
 
     print('Best dev accuracy: %f' % best_dev_acc)

@@ -373,7 +373,7 @@ def preprocess_conceptnet(path):
         writer.write('%s %s %s\n' % (relation, w1, w2))
     writer.close()
 
-def preprocess_conceptnet_additoanl(conceptnet_path, additional_path):
+def preprocess_conceptnet_additonal(conceptnet_path, additional_path):
     import utils
     build_vocab_from_raw_dataset(path='./data/*-data.json')
     writer = open('./data/concept.filter', 'w', encoding='utf-8')
@@ -408,7 +408,7 @@ def preprocess_conceptnet_additoanl(conceptnet_path, additional_path):
 if __name__ == '__main__':
     init_tokenizer()
     if len(sys.argv) > 1 and sys.argv[1] == 'conceptnet':
-        preprocess_conceptnet_additoanl('./data/conceptnet-assertions-5.5.5.csv', './other_data/auto_conceptnet_1_percent.txt')
+        preprocess_conceptnet_additonal('./data/conceptnet-assertions-5.5.5.csv', './other_data/auto_conceptnet_1_percent.txt')
         exit(0)
     preprocess_dataset('./data/trial-data.json')
     preprocess_dataset('./data/dev-data.json')
