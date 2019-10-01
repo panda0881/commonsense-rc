@@ -396,13 +396,13 @@ def preprocess_conceptnet_additonal(conceptnet_path, additional_path):
     for line in open(additional_path, 'r', encoding='utf-8'):
         fs = line[:-1].split('\t')
         relation, arg1, arg2 = fs[0], fs[1], fs[2]
-        lan1, w1 = _get_lan_and_w(arg1)
-        if lan1 != 'en' or not all(w in utils.vocab for w in w1.split('_')):
+        # lan1, w1 = _get_lan_and_w(arg1)
+        if not all(w in utils.vocab for w in arg1.split(' ')):
             continue
-        lan2, w2 = _get_lan_and_w(arg2)
-        if lan2 != 'en' or not all(w in utils.vocab for w in w2.split('_')):
+        # lan2, w2 = _get_lan_and_w(arg2)
+        if not all(w in utils.vocab for w in arg2.split(' ')):
             continue
-        writer.write('%s %s %s\n' % (relation, w1, w2))
+        writer.write('%s %s %s\n' % (relation, arg1, arg2))
     writer.close()
 
 if __name__ == '__main__':
