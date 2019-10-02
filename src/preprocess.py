@@ -410,7 +410,7 @@ def preprocess_conceptnet_additonal(conceptnet_path, additional_path):
 if __name__ == '__main__':
     init_tokenizer()
     if len(sys.argv) > 1 and sys.argv[1] == 'conceptnet':
-        preprocess_conceptnet_additonal('./data/conceptnet-assertions-5.5.5.csv', './other_data/auto_original_1_percent.txt')
+        preprocess_conceptnet_additonal('./data/conceptnet-assertions-5.5.5.csv', './other_data/COMET_original_1.txt')
         # preprocess_conceptnet('./data/conceptnet-assertions-5.5.5.csv')
         exit(0)
     preprocess_dataset('./data/trial-data.json')
